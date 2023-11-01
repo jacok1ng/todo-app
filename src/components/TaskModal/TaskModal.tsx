@@ -1,4 +1,6 @@
-import TextField from 'components/TextField'
+import { Button, Select } from 'components'
+import LabeledField from './LabeledField'
+import { TaskFormFields, useTaskFormProps } from './TaskModal.utils'
 
 interface TaskModalProps {
   isOpen: boolean
@@ -6,23 +8,77 @@ interface TaskModalProps {
 }
 
 const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
+  const { handleSubmit, register, reset } = useTaskFormProps()
+  const onClose = () => {
+    toggle()
+    reset()
+  }
+
   return (
     <div
       className={`${
         isOpen ? 'flex' : 'hidden'
       } absolute left-0  top-0 h-screen w-screen items-center justify-center bg-black bg-opacity-40`}
-      onClick={toggle}
+      onClick={onClose}
     >
-      <div
-        className="flex h-[400px] w-[650px] flex-col space-y-5 rounded bg-white px-11 py-10"
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log(data)
+        })}
+        className="flex  w-[650px] flex-col space-y-5 rounded bg-white px-11 py-10"
         onClick={(e) => e.stopPropagation()}
       >
-        <TextField placeholder="Nazwa zadania" />
-        <textarea
-          placeholder="Opis zadania..."
-          className="h-[100px] max-h-[100px] min-h-[100px] rounded border-2 border-stone-400 px-3 py-1"
+        <LabeledField
+          label="Nazwa zadania"
+          component={
+            <input
+              {...register(TaskFormFields.title)}
+              placeholder="Nazwa zadania"
+            />
+          }
         />
-      </div>
+        <LabeledField
+          label="Opis zadania"
+          component={
+            <textarea
+              {...register(TaskFormFields.description)}
+              placeholder="Opis zadania..."
+              className="h-[100px] max-h-[100px] min-h-[100px] rounded border-2 border-stone-400 px-3 py-1"
+            />
+          }
+        />
+        <LabeledField
+          label="Data zakończenia"
+          component={
+            <input
+              {...register(TaskFormFields.endDate)}
+              type="date"
+              placeholder="Data zakończenia zadania"
+            />
+          }
+        />
+        <LabeledField
+          label="Priorytet"
+          component={
+            <Select
+              register={register(TaskFormFields.priority)}
+              options={[
+                { label: 'Niski', value: 'low' },
+                { label: 'Normalny', value: 'normal' },
+                { label: 'Wysoki', value: 'high' },
+              ]}
+            />
+          }
+        />
+        <div className="flex justify-center gap-3 pt-8">
+          <Button type="submit" className="w-44 bg-green-600">
+            Utwórz
+          </Button>
+          <Button onClick={toggle} className="w-44">
+            Zamknij
+          </Button>
+        </div>
+      </form>
     </div>
   )
 }

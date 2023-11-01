@@ -3,6 +3,7 @@ const Task = () => {
     <div className="flex flex-col space-y-3 rounded-md border-2 border-stone-400 px-5 py-2">
       <div>
         <h4 className="font-medium">My title</h4>
+        <p className="text-xs font-medium">Priorytet: normalny</p>
       </div>
       <div className="h-px w-full bg-stone-400" />
       <div className="line-clamp-2">
