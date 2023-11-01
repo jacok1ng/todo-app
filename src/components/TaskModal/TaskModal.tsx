@@ -1,6 +1,10 @@
 import { Button, Select } from 'components'
 import LabeledField from './LabeledField'
-import { TaskFormFields, useTaskFormProps } from './TaskModal.utils'
+import {
+  TaskFormFields,
+  useOnSubmit,
+  useTaskFormProps,
+} from './TaskModal.utils'
 
 interface TaskModalProps {
   isOpen: boolean
@@ -9,6 +13,7 @@ interface TaskModalProps {
 
 const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
   const { handleSubmit, register, reset } = useTaskFormProps()
+  const onSubmit = useOnSubmit()
   const onClose = () => {
     toggle()
     reset()
@@ -22,9 +27,7 @@ const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
       onClick={onClose}
     >
       <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data)
-        })}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex  w-[650px] flex-col space-y-5 rounded bg-white px-11 py-10"
         onClick={(e) => e.stopPropagation()}
       >

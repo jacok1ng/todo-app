@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { Priority } from 'types'
 import { z } from 'zod'
 
@@ -45,7 +45,7 @@ export const useTaskFormProps = () => {
 }
 
 export const useOnSubmit = () => {
-  const onSubmit = (values: SubmitHandler<TaskFormValues>) => {
+  const onSubmit = (values: TaskFormValues) => {
     console.log(values)
   }
 
