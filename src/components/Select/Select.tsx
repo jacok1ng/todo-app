@@ -12,16 +12,14 @@ const Select = <T extends string | number>({
   options,
   register,
   ...props
-}: SelectProps<T>) => {
-  return (
-    <select {...props} {...register}>
-      {options.map(({ label, value }, i) => (
-        <option key={`${label}-${value}-${i}`} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
-  )
-}
+}: SelectProps<T>) => (
+  <select {...props} {...register}>
+    {options.map(({ label, value }, i) => (
+      <option key={`${label}-${value}-${i}`} value={value}>
+        {label}
+      </option>
+    ))}
+  </select>
+)
 
 export default Select

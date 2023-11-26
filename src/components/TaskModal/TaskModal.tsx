@@ -1,4 +1,4 @@
-import { Button, Select } from 'components'
+import { Button } from 'components'
 import LabeledField from './LabeledField'
 import {
   TaskFormFields,
@@ -50,30 +50,7 @@ const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
             />
           }
         />
-        <LabeledField
-          label="Data zakończenia"
-          component={
-            <input
-              {...register(TaskFormFields.endDate)}
-              type="date"
-              placeholder="Data zakończenia zadania"
-            />
-          }
-        />
-        <LabeledField
-          label="Priorytet"
-          component={
-            <Select
-              register={register(TaskFormFields.priority)}
-              options={[
-                { label: 'Niski', value: 'low' },
-                { label: 'Normalny', value: 'normal' },
-                { label: 'Wysoki', value: 'high' },
-              ]}
-            />
-          }
-        />
-        <div className="flex justify-center gap-3 pt-8">
+        <div className="flex justify-center gap-3 pt-3">
           <Button type="submit" className="w-44 bg-green-600">
             Utwórz
           </Button>
