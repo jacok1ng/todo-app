@@ -20,7 +20,7 @@ const TaskList = () => (
     />
     <Task
       title="Title 5"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
+      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
     />
   </div>
 )
