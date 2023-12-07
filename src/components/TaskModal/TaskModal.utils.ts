@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createTodo } from 'api'
 import { useForm } from 'react-hook-form'
+import { useMutation, useQueryClient } from 'react-query'
 import { z } from 'zod'
 
 export enum TaskFormFields {
   title = 'title',
-  description = 'description',
+  description = 'noteValue',
 }
 
 interface TaskFormValues {
@@ -34,9 +36,14 @@ export const useTaskFormProps = () => {
   })
 }
 
-export const useOnSubmit = () => {
+export const useOnSubmit = (onClose: () => void) => {
+  const queryClient = useQueryClient()
+  const { mutate: addTodo } = useMutation(createTodo, {
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: 'todos' }),
+  })
   const onSubmit = (values: TaskFormValues) => {
-    console.log(values)
+    addTodo(values)
+    onClose()
   }
 
   return onSubmit

@@ -1,28 +1,37 @@
+import { useQuery } from 'react-query'
 import Task from './Task'
+import { getTodos } from 'api'
+import { TodoItem } from 'types'
+import EmptyListIndicator from './EmptyListIndicator'
+import LoadingIndicator from './LoadingIndicator'
 
-const TaskList = () => (
-  <div className="flex max-h-[700px] w-[650px] flex-col gap-3 overflow-y-auto scroll-auto">
-    <Task
-      title="Title 1"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
-    />
-    <Task
-      title="Title 2"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
-    />
-    <Task
-      title="Title 3"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
-    />
-    <Task
-      title="Title 4"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
-    />
-    <Task
-      title="Title 5"
-      description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ipsa, facere eius repellendus ducimus aliquam molestias id recusandae distinctio quae."
-    />
-  </div>
-)
+interface TaskListProps {
+  searchName: string
+}
+
+const TaskList = ({ searchName }: TaskListProps) => {
+  const { data, isLoading } = useQuery<TodoItem[]>(
+    ['todos', searchName],
+    getTodos(searchName)
+  )
+
+  if (isLoading) return <LoadingIndicator />
+
+  if (!data || !data?.length) return <EmptyListIndicator />
+
+  return (
+    <div className="flex max-h-[700px] w-[650px] flex-col gap-3 overflow-y-auto scroll-auto">
+      {data.map(({ id, createDate, noteValue, title }) => (
+        <Task
+          key={id}
+          id={id}
+          description={noteValue}
+          title={title}
+          createDate={createDate}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default TaskList

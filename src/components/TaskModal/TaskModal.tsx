@@ -13,11 +13,11 @@ interface TaskModalProps {
 
 const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
   const { handleSubmit, register, reset } = useTaskFormProps()
-  const onSubmit = useOnSubmit()
   const onClose = () => {
     toggle()
     reset()
   }
+  const onSubmit = useOnSubmit(onClose)
 
   return (
     <div
@@ -37,6 +37,7 @@ const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
             <input
               {...register(TaskFormFields.title)}
               placeholder="Nazwa zadania"
+              className="h-[36px] rounded border-2 border-slate-400 px-2"
             />
           }
         />
@@ -54,7 +55,7 @@ const TaskModal = ({ isOpen, toggle }: TaskModalProps) => {
           <Button type="submit" className="w-44 bg-green-600">
             Utwórz
           </Button>
-          <Button onClick={toggle} className="w-44">
+          <Button onClick={toggle} className="w-44" type="reset">
             Zamknij
           </Button>
         </div>
